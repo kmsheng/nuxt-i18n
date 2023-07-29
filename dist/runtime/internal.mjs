@@ -283,9 +283,16 @@ export function detectBrowserLanguage(route, context, nuxtI18nOptions, nuxtI18nI
     __DEBUG__ && console.log("detectBrowserLanguage: cookieLocale", cookieLocale);
   }
   if (!matchedLocale) {
-    matchedLocale = getBrowserLocale(nuxtI18nInternalOptions, context);
-    localeFrom = "navigator_or_header";
-    __DEBUG__ && console.log("detectBrowserLanguage: browserLocale", matchedLocale);
+    const { detectLocale } = nuxtI18nOptions.detectBrowserLanguage;
+    if (detectLocale) {
+      matchedLocale = detectLocale(nuxtI18nInternalOptions, context);
+      localeFrom = "custom_detect_locale";
+      __DEBUG__ && console.log("detectBrowserLanguage: customDetectLocale", matchedLocale);
+    } else {
+      matchedLocale = getBrowserLocale(nuxtI18nInternalOptions, context);
+      localeFrom = "navigator_or_header";
+      __DEBUG__ && console.log("detectBrowserLanguage: browserLocale", matchedLocale);
+    }
   }
   __DEBUG__ && console.log(
     "detectBrowserLanguage: (matchedLocale, cookieLocale, localeFrom) -",
