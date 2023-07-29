@@ -3,6 +3,10 @@ import type { Locale, I18nOptions } from 'vue-i18n'
 
 export type RedirectOnOptions = 'all' | 'root' | 'no prefix'
 
+export type NuxtI18nInternalOptions = {
+  __normalizedLocales?: LocaleObject[]
+}
+
 export interface DetectBrowserLanguageOptions {
   alwaysRedirect?: boolean
   cookieCrossOrigin?: boolean
@@ -12,6 +16,7 @@ export interface DetectBrowserLanguageOptions {
   fallbackLocale?: Locale | null
   redirectOn?: RedirectOnOptions
   useCookie?: boolean
+  detectLocale?(options: Required<NuxtI18nInternalOptions>, context?: any): string | undefined
 }
 
 export type LocaleType = 'static' | 'dynamic' | 'unknown'
@@ -102,7 +107,3 @@ export type NuxtI18nOptions<Context = unknown> = {
   | 'routesNameSeparator'
   | 'trailingSlash'
 >
-
-export type NuxtI18nInternalOptions = {
-  __normalizedLocales?: LocaleObject[]
-}
