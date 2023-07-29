@@ -4,6 +4,9 @@ import { Locale, LocaleMessages, DefineLocaleMessage } from 'vue-i18n';
 export { I18nOptions } from 'vue-i18n';
 
 type RedirectOnOptions = 'all' | 'root' | 'no prefix';
+type NuxtI18nInternalOptions = {
+    __normalizedLocales?: LocaleObject[];
+};
 interface DetectBrowserLanguageOptions {
     alwaysRedirect?: boolean;
     cookieCrossOrigin?: boolean;
@@ -13,6 +16,7 @@ interface DetectBrowserLanguageOptions {
     fallbackLocale?: Locale | null;
     redirectOn?: RedirectOnOptions;
     useCookie?: boolean;
+    detectLocale?(options: Required<NuxtI18nInternalOptions>, context?: any): string | undefined;
 }
 type LocaleType = 'static' | 'dynamic' | 'unknown';
 type LocaleInfo = {
@@ -85,9 +89,6 @@ type NuxtI18nOptions<Context = unknown> = {
     debug?: boolean;
     dynamicRouteParams?: boolean;
 } & Pick<I18nRoutingOptions<Context>, 'baseUrl' | 'strategy' | 'defaultDirection' | 'defaultLocale' | 'defaultLocaleRouteNameSuffix' | 'locales' | 'routesNameSeparator' | 'trailingSlash'>;
-type NuxtI18nInternalOptions = {
-    __normalizedLocales?: LocaleObject[];
-};
 
 declare const _default: _nuxt_schema.NuxtModule<NuxtI18nOptions>;
 
