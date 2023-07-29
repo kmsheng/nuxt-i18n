@@ -392,9 +392,16 @@ export function detectBrowserLanguage<Context extends NuxtApp = NuxtApp>(
   }
   // try to get locale from either navigator or header detection
   if (!matchedLocale) {
-    matchedLocale = getBrowserLocale(nuxtI18nInternalOptions, context)
-    localeFrom = 'navigator_or_header'
-    __DEBUG__ && console.log('detectBrowserLanguage: browserLocale', matchedLocale)
+    const { detectLocale } = nuxtI18nOptions.detectBrowserLanguage
+    if (detectLocale) {
+      matchedLocale = detectLocale(nuxtI18nInternalOptions, context)
+      localeFrom = 'custom_detect_locale'
+      __DEBUG__ && console.log('detectBrowserLanguage: customDetectLocale', matchedLocale)
+    } else {
+      matchedLocale = getBrowserLocale(nuxtI18nInternalOptions, context)
+      localeFrom = 'navigator_or_header'
+      __DEBUG__ && console.log('detectBrowserLanguage: browserLocale', matchedLocale)
+    }
   }
   __DEBUG__ &&
     console.log(
